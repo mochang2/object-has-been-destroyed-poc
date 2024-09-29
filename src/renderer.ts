@@ -1,15 +1,24 @@
 const addElements = () => {
-  const button = document.createElement("button") as HTMLButtonElement;
-  button.innerText = "download item";
-  button.id = "button";
+  const downloadButton = document.createElement("button");
+  downloadButton.innerText = "download item";
+  downloadButton.id = "download";
+  document.body.appendChild(downloadButton);
 
-  document.body.appendChild(button);
+  const exitButton = document.createElement("button");
+  exitButton.innerHTML = "exit";
+  exitButton.id = "exit";
+  document.body.appendChild(exitButton);
 };
 
 const addListeners = () => {
-  const button = document.getElementById("button");
-  button?.addEventListener("click", () => {
+  const downloadButton = document.getElementById("download");
+  downloadButton?.addEventListener("click", () => {
     window.ipcRenderer.download();
+  });
+
+  const exitButton = document.getElementById("exit");
+  exitButton?.addEventListener("click", () => {
+    window.ipcRenderer.exit();
   });
 };
 

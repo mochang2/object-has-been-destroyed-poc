@@ -11,7 +11,11 @@ function addipcMainEvent() {
       return;
     }
 
-    window.webContents.downloadURL(); // TODO: 여기 채우기
+    // window.webContents.downloadURL(); // TODO: make file link
+  });
+
+  ipcMain.handle("exit", () => {
+    app.exit();
   });
 }
 
