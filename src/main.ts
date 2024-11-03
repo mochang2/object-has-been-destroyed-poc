@@ -1,6 +1,8 @@
-//main.ts
 import { app, ipcMain, BrowserWindow } from "electron"; // ES import
 import path from "node:path";
+import fs from "node:fs";
+
+const url = ""; // TODO: change
 
 function addipcMainEvent() {
   ipcMain.handle("download", () => {
@@ -11,7 +13,7 @@ function addipcMainEvent() {
       return;
     }
 
-    // window.webContents.downloadURL(); // TODO: make file link
+    window.webContents.downloadURL(url);
   });
 
   ipcMain.handle("exit", () => {
@@ -31,13 +33,17 @@ function createWindow() {
   window.loadFile("index.html");
 
   window.webContents.session.on("will-download", (_, item) => {
-    console.log("save path", item.getSavePath());
+    const destination = path.join(__dirname, "../", "dest");
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination);
+    }
 
-    item.on("updated", (__, state) => {
-      console.log("updated", state);
+    item.setSavePath(path.join(destination, item.getFilename()));
+    item.on("updated", () => {
+      console.log("updated", window.webContents.isDestroyed());
     });
-    item.on("done", (__, state) => {
-      console.log("done", state);
+    item.on("done", () => {
+      console.log("done", window.webContents.isDestroyed());
     });
   });
 }
