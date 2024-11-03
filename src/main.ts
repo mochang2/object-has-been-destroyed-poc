@@ -53,4 +53,28 @@ function createWindow() {
     addipcMainEvent();
     createWindow();
   });
+
+  /*
+  Because "Object has been destroyed" error does not always occur,
+  you should try many times to get the error.
+  If you want to try to make the error automatically,
+  remove the comments below and run a "run.sh".
+  */
+  // setTimeout(() => {
+  //   const window = BrowserWindow.getFocusedWindow();
+  //   if (!window) {
+  //     return;
+  //   }
+
+  //   window.webContents.downloadURL(url);
+  // }, 500);
+
+  // setTimeout(() => {
+  //   const window = BrowserWindow.getFocusedWindow();
+  //   if (!window) {
+  //     return;
+  //   }
+
+  //   window.destroy();
+  // }, 3_000);
 })();
