@@ -40,6 +40,13 @@ function createWindow() {
 
     item.setSavePath(path.join(destination, item.getFilename()));
     item.on("updated", () => {
+      for (let i = 0; i < 1_000_000_000; i++) {
+        // a long synchronous task
+        if (i % 200_000_000 === 0) {
+          console.log(i, window.isDestroyed());
+        }
+      }
+      console.log(window.isDestroyed());
       console.log("updated", window.webContents.isDestroyed());
     });
     item.on("done", () => {
